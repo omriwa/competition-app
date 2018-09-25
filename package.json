@@ -1,0 +1,54 @@
+{
+  "name": "competition-app",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "start": "npx webpack --config ./configuration/webpack.config.js",
+    "watch": "webpack --watch",
+    "dev-server": "webpack-dev-server --open",
+    "server": "nodemon ./dist/server.js",
+    "dev": "concurrently --kill-others-on-fail \"npm server\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/omriwa/competition-app.git"
+  },
+  "keywords": [
+    "react",
+    "react-redux",
+    "node"
+  ],
+  "author": "omri wallach",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/omriwa/competition-app/issues"
+  },
+  "homepage": "https://github.com/omriwa/competition-app#readme",
+  "dependencies": {
+    "@babel/polyfill": "^7.0.0",
+    "babel-loader": "^8.0.2",
+    "babel-plugin-transform-export-default": "^7.0.0-alpha.20",
+    "body-parser": "^1.18.3",
+    "concurrently": "^4.0.1",
+    "express": "^4.16.3",
+    "mongoose": "^5.2.14",
+    "react": "^16.5.1",
+    "react-dom": "^16.5.1",
+    "typescript": "^3.0.3",
+    "webpack": "^4.19.1",
+    "webpack-dev-server": "^3.1.8",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "babel-loader": "^8.0.2",
+    "clean-webpack-plugin": "^0.1.19",
+    "webpack": "^4.19.1",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.8"
+  }
+}
