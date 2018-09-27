@@ -3,7 +3,7 @@ exports.__esModule = true;
 var express_1 = require("express");
 var index_js_1 = require("./controllers/index.js");
 var mongoose_1 = require("mongoose");
-var index_js_2 = require("./middlewares/index.js");
+var path_1 = require("path");
 console.log("routes", index_js_1["default"]);
 var server = express_1["default"]();
 var dbOptions = {
@@ -11,15 +11,20 @@ var dbOptions = {
 };
 // server configuration
 console.log("start server configuration\n");
+server.use(express_1["default"].static("dist/public"));
+// server.use(express.static("./dist/public'));
 // server.use(bodyParser);
+// server.use(express.static(path.join(__dirname, '../client/build')))
 //Middlewares
 // ROUTES
 server.get("/", function (req, res) {
-    res.send("bbbbbbbbbb");
+    console.log("dirname in route", path_1["default"].dirname('/dist/public/index.html'));
+    // res.sendFile(__dirname + '/index.html');
+    res.sendFile('index.html');
 });
 server.use("/competitor", index_js_1["default"].competitorRouter);
 server.use("/trainer", index_js_1["default"].trainerRouter);
-server.use(index_js_2["default"].pageNotFoundMiddleware);
+// server.use(Middlewares.pageNotFoundMiddleware);
 // LISTEN
 // process.env.PORT
 server.listen(8080, function (e) {
