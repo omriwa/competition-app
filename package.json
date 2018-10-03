@@ -4,7 +4,8 @@
   "description": "",
   "private": true,
   "scripts": {
-    "start": "npx webpack --config ./configuration/webpack.config.js"
+    "start": "npx webpack --config ./configuration/webpack.config.js",
+    "dev": "concurrently --kill-others \"npx webpack --config ./configuration/webpack.config.js\"  \"npm run dev --prefix ./src/client\""
   },
   "repository": {
     "type": "git",
@@ -26,7 +27,6 @@
     "babel-loader": "^8.0.2",
     "babel-plugin-transform-export-default": "^7.0.0-alpha.20",
     "body-parser": "^1.18.3",
-    "concurrently": "^4.0.1",
     "express": "^4.16.3",
     "mongoose": "^5.2.14",
     "react": "^16.5.1",
@@ -42,6 +42,7 @@
     "@babel/preset-env": "^7.1.0",
     "babel-loader": "^8.0.2",
     "clean-webpack-plugin": "^0.1.19",
+    "concurrently": "^4.0.1",
     "webpack": "^4.19.1",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.8"
