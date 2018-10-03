@@ -22,7 +22,10 @@ module.exports = {
     contentBase: './dist'
   },
   watch: true,
-  plugins: [new CleanWebpackPlugin(['dist'])],
+  plugins: [
+    new CleanWebpackPlugin(['dist']),
+    new webpack.ProgressPlugin()]
+    ,
   resolve: {
     modules: ['node_modules'],
     extensions: ['.jsx','.ts']
