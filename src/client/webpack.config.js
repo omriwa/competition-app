@@ -8,28 +8,27 @@ console.log("##############");
 
 const htmlPlugin = new HtmlWebPackPlugin({
   template: "./src/index.html",
-  filename: "./index.html"
+  filename: "index.html"
 });
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/index.tsx',
   output: {
     filename: '[name].js',
     path: path.resolve("../../", 'dist/public')
   },
   module: {
     rules: [
-      // Transform all ES6 files to plain old ES5.
-			{
-				test: /\.(js|jsx)$/,
-				exclude: [ /node_modules/, /styles/],
-				loader: 'babel-loader',
-				// include: path.resolve(__dirname, '../../src')
-			}
+      // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
+      { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
+
+      // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
+      { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
     ]
   },
   plugins: [htmlPlugin],
   resolve: {
-    extensions: [".js", ".json", ".ts", ".jsx"],
-  }
+    extensions: [".js", ".json", ".ts", ".jsx", ".tsx"],
+  },
+  devtool: "source-map",
 };
