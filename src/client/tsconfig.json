@@ -3,9 +3,9 @@
         "rootDir": "./src",
         "outDir": "../dist/public",
         "sourceMap": true,
-        "noImplicitAny": true,
+        "noImplicitAny": false,
         "module": "commonjs",
-        "target": "es5",
+        "target": "ESNext",
         "jsx": "react"
     },
     "include": [
