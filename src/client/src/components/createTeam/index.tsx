@@ -1,5 +1,6 @@
 import * as React from "react";
 import ParticipantCreator from "./ParticipantCreator";
+import readXlsxFile from 'read-excel-file';
 
 interface ICreateTeamState {
     input: string,
@@ -27,6 +28,7 @@ export default class CreateTeam extends React.Component<ICreateTeamProps,ICreate
         this.onAddCol = this.onAddCol.bind(this);
         this.renderTableBody = this.renderTableBody.bind(this);
         this.addNewParticipant = this.addNewParticipant.bind(this);
+        this.setTeamFile = this.setTeamFile.bind(this);
     }
     
     private addNewParticipant(newParticipant: any){
@@ -79,7 +81,7 @@ export default class CreateTeam extends React.Component<ICreateTeamProps,ICreate
                             return <tr>
                                     {
                                         row.map(cell => {
-                                            return <td style={(this.state.searchInput !== "" && cell.indexOf(this.state.searchInput) !== -1 ? markStyle : {})}>{cell}</td>;
+                                            return <td style={(this.state.searchInput !== "" && (cell + "") === this.state.searchInput ? markStyle : {})}>{cell}</td>;
                                         })
                                     }
                                 </tr>
@@ -88,36 +90,77 @@ export default class CreateTeam extends React.Component<ICreateTeamProps,ICreate
                 </tbody>
     }
     
+    private renderBtnSection():  any {
+        return (
+            <React.Fragment>
+                <div className="btn-section">
+                {
+                        // <div>
+                        //     <input type="text" 
+                        //     value={this.state.input}
+                        //     onChange={e => this.onInputChange(e,"input")}/>
+                        //     <button onClick={this.onAddCol}>Add Column</button>
+                        // </div>
+                }
+                        
+                        <div>
+                            <input type="text"
+                            placeholder="search"
+                            value={this.state.searchInput}
+                            onChange={e => this.onInputChange(e,"searchInput")}/>
+                        </div>
+                    </div>
+        </React.Fragment>
+        );
+    }
+    
+    private setTeamFile(e: any): void {
+        let that = this;
+       readXlsxFile(e.target.files[0]).then(rows => {
+           that.setState({
+               ...this.state,
+               colsName: [...rows[0]],
+               tableRows: rows.slice(1)
+           });
+       });
+    }
+    
+    private convertTeamRowToJson(teamArr: any[]): any {
+        let convertToObjArr = [],
+            competitorObj = {},
+            objKeys = teamArr[0];
+        
+        for(let i = 1; i < teamArr.length; i++){
+            for(let key = 0; key < objKeys.length; key++)
+                competitorObj[objKeys[key]] = teamArr[i][key];
+            
+            convertToObjArr.push({...competitorObj})
+        }
+        
+        return convertToObjArr;
+    }
+    
     render(){
         return(
             <div>
             
-            <div className="btn-section">
+                {
+                    this.renderBtnSection()
+                }
+                    
                 <div>
-                    <input type="text" 
-                    value={this.state.input}
-                    onChange={e => this.onInputChange(e,"input")}/>
-                    <button onClick={this.onAddCol}>Add Column</button>
+                    <input type="file"
+                        onChange={e => this.setTeamFile(e)}
+                    />
+                    <button>Load team from excel</button>
                 </div>
                 
                 <div>
-                    <input type="text"
-                    placeholder="search"
-                    value={this.state.searchInput}
-                    onChange={e => this.onInputChange(e,"searchInput")}/>
+                    <table>
+                        {this.renderTableCols(this.state.colsName)}
+                        {this.renderTableBody(this.state.tableRows)}
+                    </table>
                 </div>
-            </div>
-            
-            <div>
-                <table>
-                    {this.renderTableCols(this.state.colsName)}
-                    {this.renderTableBody(this.state.tableRows)}
-                </table>
-            </div>
-                
-            <div>
-                <ParticipantCreator inputs={this.state.colsName} onAddNewParticipant={this.addNewParticipant}/>
-            </div>
                 
             </div>
             );
