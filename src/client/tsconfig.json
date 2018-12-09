@@ -6,7 +6,8 @@
         "noImplicitAny": false,
         "module": "commonjs",
         "target": "ESNext",
-        "jsx": "react"
+        "jsx": "react",
+        "resolveJsonModule": true
     },
     "include": [
         "./src/**/*"

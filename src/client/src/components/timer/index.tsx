@@ -1,33 +1,39 @@
 import * as React from "react";
 
+interface ITimerProps {
+    
+}
+
 interface ITimerState {
     timerOn: boolean,
     timeToCount: number,
-    timer: number
-}
-
-interface ITimerProps {
-    
+    timer: number,
+    second: number,
+    minute: number
 }
 
 const secondScalar = 1000;
 
 export default class Timer extends React.Component<ITimerProps,ITimerState> {
     private timerInterval: any;
+    private initTimeToCount = 5 * secondScalar * 60 + secondScalar * 0;
     
     constructor(props){
         super(props);
         
-        let initTimeToCount = 0 * secondScalar * 60 + secondScalar * 10;
-        
         this.state = {
             timerOn: false,
-            timeToCount: initTimeToCount,
-            timer:  initTimeToCount
+            timeToCount: this.initTimeToCount,
+            timer:  this.initTimeToCount,
+            second: 0,
+            minute: 5 
         };
         
         this.toggleTimer = this.toggleTimer.bind(this);
         this.timer = this.timer.bind(this);
+        this.resetTimer = this.resetTimer.bind(this);
+        this.onMinuteChange = this.onMinuteChange.bind(this);
+        this.onSecondChange = this.onSecondChange.bind(this);
     }
     
     private formatMilisecToClock(time: number): string {
@@ -48,7 +54,6 @@ export default class Timer extends React.Component<ITimerProps,ITimerState> {
         let that = this,
             second = 1000;
             
-            console.log("this",this)
             if(this.state.timerOn)
                 this.timerInterval = setInterval(() => {
                     if(that.state.timer === 0){
@@ -65,13 +70,75 @@ export default class Timer extends React.Component<ITimerProps,ITimerState> {
                 clearInterval(this.timerInterval);
     }
     
+    private resetTimer():void {
+        //clear interval
+        clearInterval(this.timerInterval);
+        //reset the timer
+        this.setState(
+            {
+                ...this.state,
+                timerOn: false,
+                timeToCount: this.initTimeToCount,
+                timer:  this.initTimeToCount
+            }    
+        );
+    }
+    
+    private onSecondChange(e: any){
+        let second = e.target.value,
+            timeCalc = this.getTimeCalculate(this.state.minute,second);
+        
+        this.setState(
+            {
+                ...this.state,
+                timeToCount: timeCalc,
+                timer:  timeCalc,
+                second: second
+            }
+        );
+    }
+    
+    private onMinuteChange(e: any){
+        let minute = e.target.value,
+            timeCalc = this.getTimeCalculate(minute,this.state.second);
+
+        this.setState(
+            {
+                ...this.state,
+                timeToCount: timeCalc,
+                timer:  timeCalc,
+                minute: minute
+            }
+        );
+    }
+    
+    private getTimeCalculate(minute: number, second: number): number {
+        return minute * secondScalar * 60 + secondScalar * second;
+    }
+    
     render(){
         return(
             <div>
                 <h3><span>{this.formatMilisecToClock(this.state.timeToCount)}</span> Minutes Round</h3>
+                
                 <div>
                     {this.formatMilisecToClock(this.state.timer)}
                     <button onClick={this.toggleTimer}> { (this.state.timerOn ? "Pause" : "Start") } clock</button>
+                    <button onClick={this.resetTimer}>Reset Timer</button>
+                </div>
+                
+                <div>
+                    <h3>Timer Settings</h3>
+                    <input 
+                        onChange={this.onMinuteChange}
+                        value={this.state.minute}
+                        type="number" 
+                    />
+                    <input 
+                        onChange={this.onSecondChange}
+                        value={this.state.second}
+                        type="number" 
+                    />
                 </div>
             </div>
         );

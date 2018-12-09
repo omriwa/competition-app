@@ -152,7 +152,6 @@ export default class CreateTeam extends React.Component<ICreateTeamProps,ICreate
                     <input type="file"
                         onChange={e => this.setTeamFile(e)}
                     />
-                    <button>Load team from excel</button>
                 </div>
                 
                 <div>
