@@ -6,6 +6,9 @@ const initState = {
     minute: 0
 }
 
-export default (state = initState,action) => {
-    
+export default (state = initState,action: any) => {
+    switch(action){
+        default:
+            return state;
+    }
 }

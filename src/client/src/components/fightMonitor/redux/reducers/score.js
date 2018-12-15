@@ -8,4 +8,8 @@ var initState = {
 };
 exports["default"] = function (state, action) {
     if (state === void 0) { state = initState; }
+    switch (action) {
+        default:
+            return state;
+    }
 };
