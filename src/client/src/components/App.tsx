@@ -11,21 +11,15 @@ export default class App extends React.Component {
         return(
             <div>
                 {
-                //<CreateTeam/>
+                <CreateTeam/>
                 }
                 {
-                    //<Timer />
-                }
-                {
-                // <Scores>
-                //     <CompetitorScore
-                //         name={"omri wallach"}
-                //         coach={"felipe cancado"}
-                //     />
-                // </Scores>
-                }
-                {
-                //<FormComponent.Register />
+                <Scores>
+                    <CompetitorScore
+                        name={"omri wallach"}
+                        coach={"felipe cancado"}
+                    />
+                </Scores>
                 }
                 {
                     <ScorePanel />

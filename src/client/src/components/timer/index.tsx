@@ -88,21 +88,23 @@ export default class Timer extends React.Component<ITimerProps,ITimerState> {
         let second = e.target.value,
             timeCalc = this.getTimeCalculate(this.state.minute,second);
         
-        this.setState(
-            {
-                ...this.state,
-                timeToCount: timeCalc,
-                timer:  timeCalc,
-                second: second
-            }
-        );
+        if(second >= 0)
+            this.setState(
+                {
+                    ...this.state,
+                    timeToCount: timeCalc,
+                    timer:  timeCalc,
+                    second: second
+                }
+            );
     }
     
     private onMinuteChange(e: any){
         let minute = e.target.value,
             timeCalc = this.getTimeCalculate(minute,this.state.second);
-
-        this.setState(
+        
+        if(minute >= 0)
+            this.setState(
             {
                 ...this.state,
                 timeToCount: timeCalc,

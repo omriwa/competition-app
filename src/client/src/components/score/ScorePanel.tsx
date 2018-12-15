@@ -2,9 +2,9 @@ import * as React from 'react';
 //components
 import Timer from "../timer/index";
 //import options from json
-import * as penaltyOptions from './penalty.json';
-import * as advantageOptions from './advantage.json';
-import * as pointOptions from './point.json';
+import * as penaltyOptions from './options/penalty.json';
+import * as advantageOptions from './options/advantage.json';
+import * as pointOptions from './options/point.json';
 //interface
 import IScoreLog from "./scoreLogInterface";
 
